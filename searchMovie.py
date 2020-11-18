@@ -7,28 +7,30 @@ with open('oscar.json') as f:
     # a=json.load(h)
 # print(len(a))
 
-# pass in par and a dictionary of movies
-# just returns array of dictionaries 
+# pass in par and an array of dictionaries containing movie info
+# returns array of dictionaries 
 # the dictionaries hold info about a particular movie
-# maybe change it so that it returns json instead
+# the movie category field are in upper case
 def searchByName(par, d):
     resultsDict={}
     arr=[]
     for i in range(0,len(d)):
         val = d[i]['film']
-        if par in val:
-            if not nVal in resultsDict:
-                resultsDict[nVal]=d[i]
-                resultsDict[nVal]['category']=[resultsDict[nVal]['category']]
+        if par.upper() in val.upper():
+            if not val in resultsDict:
+                resultsDict[val]=d[i]
+                if not type(resultsDict[val]['category']) is list:
+                    resultsDict[val]['category']=[resultsDict[val]['category']]
                 arr.append(d[i])
             else:
-                resultsDict[nVal]['category'].append(d[i]['category'])
+                resultsDict[val]['category'].append(d[i]['category'])
                 
     return arr
     
 def searchByCategory(par, d):
     resultsDict={}
     arr=[]
+    par=par.upper()
     for i in range(0,len(d)):
         val = d[i]['category']
         nVal = d[i]['film']
@@ -56,7 +58,8 @@ def searchByYear(par, d):
         if par == val:
             if not nVal in resultsDict:
                 resultsDict[nVal]=d[i]
-                resultsDict[nVal]['category']=[resultsDict[nVal]['category']]
+                if not type(resultsDict[nVal]['category']) is list:
+                    resultsDict[nVal]['category']=[resultsDict[nVal]['category']]
                 arr.append(d[i])
             else:
                 resultsDict[nVal]['category'].append(d[i]['category'])
@@ -90,7 +93,8 @@ def searchByWinner(par, d):
         if par == val:
             if not nVal in resultsDict:
                 resultsDict[nVal]=d[i]
-                resultsDict[nVal]['category']=[resultsDict[nVal]['category']]
+                if not type(resultsDict[nVal]['category']) is list:
+                    resultsDict[nVal]['category']=[resultsDict[nVal]['category']]
                 arr.append(d[i])
             else:
                 resultsDict[nVal]['category'].append(d[i]['category'])

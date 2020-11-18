@@ -16,10 +16,7 @@ def home():
         return render_template('home.html', selection=request.form['rad'])
         
 @app.route('/search', methods=['GET'])
-# Search only works it there is 1 filter
-# still need to work on search with multiple filters
-# example (put at end of homepage url): '/search?category=BEST PICTURE'
-# ex2: '/search?year=1999'
+# how to test: type 'http://127.0.0.1:5000/search?category=direction&winner=True&year=1987' into url
 def search():
     category=False
     year=False
@@ -34,16 +31,22 @@ def search():
     if 'name' in request.args:
         name = str(request.args["name"])
     
-    # Add functonality with  multiple filters
     if name :
         return jsonify(searchByName(name, data))
+    elif category and year and winner:
+        return jsonify( searchByWinner(winner, searchByYear(year, searchByCategory(category, data))) )
+    elif category and winner:
+        return jsonify( searchByWinner(winner, searchByCategory(category, data)) )
+    elif category and year:
+        return jsonify( searchByYear(year, searchByCategory(category, data)) )
+    elif year and winner:
+        return jsonify( searchByWinner(winner, searchByYear(year, data)) )
     elif category:
         return jsonify(searchByCategory(category, data))
     elif year:
         return jsonify(searchByYear(year, data))
-        
     
-
+        
 # endpoint for returning collection reasource
 @app.route('/movies/categories/bestpicture/1997', methods=['GET'])
 def getColletion():
