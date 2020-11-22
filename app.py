@@ -1,19 +1,62 @@
 from flask import Flask, render_template, request, jsonify
 from searchMovie import searchByCategory, searchByYear, searchByWinner, searchByName, data
+from imdbURL import giveURL
 import json
 
 app = Flask(__name__)
 
 
-def getIMBDLink(ImbdID):
-    return "https://www.imdb.com/title/{}/".format(ImbdID)
+
+    
+@app.route('/imbdbURL', methods=['GET', 'POST'])
+# have java script on page call this endpoint to get imdb information
+def imdb():
+    print("getting url")
+    if request.method == "GET":
+        mname=request.args['mname']
+        return giveURL(mname)
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
     if request.method == "GET":
         return render_template('home.html')
     elif request.method =="POST":
-        return render_template('home.html', selection=request.form['rad'])
+        
+        category=False
+        year=False
+        winner=False
+        name=False
+        
+        if not request.form['mname'] == "":
+            name=str(request.form['mname'])
+        if not request.form['category'] == "":
+            category=str(request.form['category'])
+        if not request.form['year'] == "":
+            year=int(request.form['year'])
+        if not request.form['winner'] == "":
+            winner=True
+            
+        if name :
+            arr=searchByName(name, data)
+        elif category and year and winner:
+            arr=searchByWinner(winner, searchByYear(year, searchByCategory(category, data)))
+        elif category and winner:
+            arr=searchByWinner(winner, searchByCategory(category, data))
+        elif category and year:
+            arr=searchByYear(year, searchByCategory(category, data)) 
+        elif year and winner:
+            arr=searchByWinner(winner, searchByYear(year, data)) 
+        elif category:
+            print(category)
+            arr=searchByCategory(category, data)
+        elif year:
+            arr=searchByYear(year, data)
+        else:
+            return render_template('home.html')
+            
+            
+        return render_template('display.html', movies=arr)
+        #return render_template('home.html', selection=request.form['rad'])
         
 @app.route('/search', methods=['GET'])
 # how to test: type 'http://127.0.0.1:5000/search?category=direction&winner=True&year=1987' into url

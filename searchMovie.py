@@ -28,6 +28,8 @@ def searchByName(par, d):
     return arr
     
 def searchByCategory(par, d):
+# ISSUE: want to try and include other categories as well
+# right now, even though the movie may have won 2 oscar categories, only 1 category is being displayed for the movie 
     resultsDict={}
     arr=[]
     par=par.upper()
