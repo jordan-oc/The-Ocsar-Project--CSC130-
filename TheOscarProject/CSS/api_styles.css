@@ -1,0 +1,35 @@
+body {
+    
+  background: #161616;
+
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #161616;
+  border: 1px solid #a59051;;
+}
+
+li {
+  float: left;
+  border-right: 1px solid #a59051;;
+}
+
+li a {
+  display: block;
+  color: #a59051;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover {
+  background-color: #111;
+}
+
+.logo {
+  float: left;
+}
