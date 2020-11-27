@@ -18,13 +18,27 @@ def searchByName(par, d):
         val = d[i]['film']
         if par.upper() in val.upper():
             if not val in resultsDict:
-                resultsDict[val]=d[i]
-                if not type(resultsDict[val]['category']) is list:
-                    resultsDict[val]['category']=[resultsDict[val]['category']]
-                arr.append(d[i])
+                if type(d[i]['category']) is list:
+                    resultsDict[val]={
+                        "year":d[i]['year'],
+                        "category":d[i]['category'],
+                        "name":d[i]['name'],
+                        "film":d[i]['film'],
+                        "winner":d[i]['winner']
+                    }
+                    arr.append(resultsDict[val])
+                else:
+                    resultsDict[val]={
+                        "year":d[i]['year'],
+                        "category":[d[i]['category']],
+                        "name":d[i]['name'],
+                        "film":d[i]['film'],
+                        "winner":d[i]['winner']
+                    }
+                    arr.append(resultsDict[val])
             else:
-                resultsDict[val]['category'].append(d[i]['category'])
-                
+                if not type(d[i]['category']) is list:
+                    resultsDict[val]['category'].append(d[i]['category'])
     return arr
     
 def searchByCategory(par, d):
@@ -37,16 +51,33 @@ def searchByCategory(par, d):
         val = d[i]['category']
         nVal = d[i]['film']
         
-        if type(val) is list:
-            for j in range(0,len(val)):
-                if par in val[j]:
-                    resultsDict[nVal]=d[i]
-                    arr.append(d[i])
-                    break
-        else:
-            if par in val and not nVal in resultsDict:
-                resultsDict[nVal]=d[i]
-                arr.append(d[i])
+        if not nVal in resultsDict:
+            if type(val) is list:
+                for j in range(0,len(val)):
+                    if par in val[j]:
+                        resultsDict[nVal]={
+                            "year":d[i]['year'],
+                            "category":d[i]['category'],
+                            "name":d[i]['name'],
+                            "film":d[i]['film'],
+                            "winner":d[i]['winner']
+                        }
+                        arr.append(resultsDict[nVal])
+                        break
+            else:
+                if par in val:
+                    resultsDict[nVal]={
+                        "year":d[i]['year'],
+                        "category":[d[i]['category']],
+                        "name":d[i]['name'],
+                        "film":d[i]['film'],
+                        "winner":d[i]['winner']
+                    }
+                    arr.append(resultsDict[nVal])
+        elif nVal in resultsDict:
+            #add other categories to movie
+            if not type(val) is list:
+                resultsDict[nVal]['category'].append(val)
                 
     return arr
 
@@ -59,12 +90,28 @@ def searchByYear(par, d):
         nVal = d[i]['film']
         if par == val:
             if not nVal in resultsDict:
-                resultsDict[nVal]=d[i]
-                if not type(resultsDict[nVal]['category']) is list:
-                    resultsDict[nVal]['category']=[resultsDict[nVal]['category']]
-                arr.append(d[i])
-            else:
-                resultsDict[nVal]['category'].append(d[i]['category'])
+                if type(d[i]['category']) is list:
+                    resultsDict[nVal]={
+                        "year":d[i]['year'],
+                        "category":d[i]['category'],
+                        "name":d[i]['name'],
+                        "film":d[i]['film'],
+                        "winner":d[i]['winner']
+                    }
+                    arr.append(resultsDict[nVal])
+                    
+                else:
+                    resultsDict[nVal]={
+                        "year":d[i]['year'],
+                        "category":[d[i]['category']],
+                        "name":d[i]['name'],
+                        "film":d[i]['film'],
+                        "winner":d[i]['winner']
+                    }
+                    arr.append(resultsDict[nVal])
+            elif nVal in resultsDict:
+                if not type(d[i]['category']) is list:
+                    resultsDict[nVal]['category'].append(d[i]['category'])
                 
     return arr
     
@@ -94,13 +141,29 @@ def searchByWinner(par, d):
         nVal = d[i]['film']
         if par == val:
             if not nVal in resultsDict:
-                resultsDict[nVal]=d[i]
-                if not type(resultsDict[nVal]['category']) is list:
-                    resultsDict[nVal]['category']=[resultsDict[nVal]['category']]
-                arr.append(d[i])
-            else:
-                resultsDict[nVal]['category'].append(d[i]['category'])
-                
+                if type(d[i]['category']) is list:
+                    resultsDict[nVal]={
+                        "year":d[i]['year'],
+                        "category":d[i]['category'],
+                        "name":d[i]['name'],
+                        "film":d[i]['film'],
+                        "winner":d[i]['winner']
+                    }
+                    arr.append(resultsDict[nVal])
+                    
+                else:
+                    resultsDict[nVal]={
+                        "year":d[i]['year'],
+                        "category":[d[i]['category']],
+                        "name":d[i]['name'],
+                        "film":d[i]['film'],
+                        "winner":d[i]['winner']
+                    }
+                    arr.append(resultsDict[nVal])
+            elif nVal in resultsDict:
+                if not type(d[i]['category']) is list:
+                    resultsDict[nVal]['category'].append(d[i]['category'])
+                  
     return arr
 
 if __name__ == '__main__':
@@ -111,9 +174,10 @@ if __name__ == '__main__':
     #print(searchByYear(1934, data))
     #print(searchByWinner(True, data))
     #print(searchByCategoryAndYear("BEST PICTURE", 1989, data))
-    #print(searchByName("Jo", data))
+    #print(searchByName("Iron", data))
+    #print(searchByName("Iron", data))
 
-    print( json.dumps(searchByCategory("BEST PICTURE", searchByYear(1997, data))) ) 
+    #print( json.dumps(searchByCategory("BEST PICTURE", searchByYear(1997, data))) ) 
 
 
     #get different categories
