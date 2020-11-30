@@ -27,22 +27,17 @@ if(jsonTest == x):
     print("pass")
 else:
     print("fail")
+#x should not be NULL
+if not x:
+    print("fail")
+else:
+    print("pass")
 
 x=searchByName("Scooby doo", data)
-if( x == x ):     
-    resultsDict={}
-    arr=[]
-    for i in range(0,len(data)):
-        val = data[i]['film']
-        if "Scooby doo".upper() in val.upper():
-            if not val in resultsDict:
-                resultsDict[val]=data[i]
-                if not type(resultsDict[val]['category']) is list:
-                    resultsDict[val]['category']=[resultsDict[val]['category']]
-                arr.append(data[i])
-    if not x:
-        print("pass")
-    else:
-        print("fail")  
+#x should be NULL
+if not x:
+    print("pass")
+else:
+    print("fail")  
 
 #test searchByCategory
