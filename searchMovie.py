@@ -112,8 +112,74 @@ if __name__ == '__main__':
     #print(searchByWinner(True, data))
     #print(searchByCategoryAndYear("BEST PICTURE", 1989, data))
     #print(searchByName("Jo", data))
+    
+    #test search by name
+    x=searchByName("Titanic", data)
+    jsonTest = [{'year': 1953, 'category': ['ART DIRECTION (Black-and-White)', 'WRITING (Story and Screenplay)', 'ACTRESS IN A LEADING ROLE', 'ACTRESS IN A SUPPORTING ROLE', 'ART DIRECTION', 'CINEMATOGRAPHY', 'COSTUME DESIGN', 'DIRECTING', 'FILM EDITING', 'MAKEUP', 'MUSIC (Original Dramatic Score)', 'MUSIC (Original Song)', 'BEST PICTURE', 'SOUND', 'SOUND EFFECTS EDITING', 'VISUAL EFFECTS'], 'name': 'Art Direction:  Lyle Wheeler, Maurice Ransford;  Set Decoration:  Stuart Reiss', 'film': 'Titanic', 'winner': False}]
+    if( x == x ):     
+        resultsDict={}
+        arr=[]
+        for i in range(0,len(data)):
+            val = data[i]['film']
+            if "Titanic".upper() in val.upper():
+                if not val in resultsDict:
+                    resultsDict[val]=data[i]
+                    if not type(resultsDict[val]['category']) is list:
+                        resultsDict[val]['category']=[resultsDict[val]['category']]
+                    arr.append(data[i])
+        if(jsonTest == x):
+            print("pass")
+        else:
+            print("fail")
 
-    print( json.dumps(searchByCategory("BEST PICTURE", searchByYear(1997, data))) ) 
+    x=searchByName("Scooby doo", data)
+    if( x == x ):     
+        resultsDict={}
+        arr=[]
+        for i in range(0,len(data)):
+            val = data[i]['film']
+            if "Scooby doo".upper() in val.upper():
+                if not val in resultsDict:
+                    resultsDict[val]=data[i]
+                    if not type(resultsDict[val]['category']) is list:
+                        resultsDict[val]['category']=[resultsDict[val]['category']]
+                    arr.append(data[i])
+        if not x:
+            print("pass")
+        else:
+            print("fail")  
+
+#test searchByCategory
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    #print( json.dumps(searchByCategory("BEST PICTURE", searchByYear(1997, data))) ) 
 
 
     #get different categories
@@ -155,5 +221,5 @@ if __name__ == '__main__':
 
     #prints out search results filtered by category
     #s =sorted(results, key = lambda t: t['category'])
-    print("printing from searchMovie.py")
+    #print("printing from searchMovie.py")
     
