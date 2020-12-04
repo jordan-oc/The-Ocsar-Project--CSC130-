@@ -59,7 +59,7 @@
 				function myFunction(par) {
 					
 					var elem = document.getElementById(par);
-					var s = "https://oscarproj1.herokuapp.com/imbdbURL?mname=" + par;
+					var s = "http://127.0.0.1:5000/imbdbURL?mname=" + par;
 					var st = "";
 					fetch(s).then(function(response) {
 						response.text().then(function(text) {
