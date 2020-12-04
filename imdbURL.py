@@ -1,7 +1,3 @@
-#2 ideas
-#just return the plot and relevant info from the api
-
-#or get the id from the api and return the imdb link
 import requests
 import json
 
