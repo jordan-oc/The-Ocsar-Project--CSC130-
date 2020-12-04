@@ -8,11 +8,12 @@ import json
 
 def giveURL(movie):
   #use string replace to format movie title for url
-  strpmvie = movie.replace(' ', '&')
-
+  strpmvie = movie.replace(' ', '+')
+  #strpyear = year.replace(' ','')
   #query omdb api for the imdb id of movie
-  respString = 'http://www.omdbapi.com/?t='+ strpmvie+ '&apikey=18325552'
-  r= requests.get(respString)
+  respString = 'http://www.omdbapi.com/?t='+ strpmvie +'&apikey=18325552'
+  #year?
+  r = requests.get(respString)
 
   #put api response into json format
   dictionary = r.json()
