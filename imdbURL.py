@@ -25,10 +25,7 @@ def giveURL(movie):
 
 
 if __name__ == '__main__':
-    #call function and pass in movie title as the parameter
-    # movie = "good will hunting"
-    # print(giveURL(movie))
-    #print(giveURL("Forrest Gump"))
+   
     
     '''
     Possible errors: 
