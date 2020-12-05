@@ -2,20 +2,29 @@ import requests
 import json
 
 
-def giveURL(movie):
+def giveURL(movie, year):
   #use string replace to format movie title for url
   strpmvie = movie.replace(' ', '+')
   #strpyear = year.replace(' ','')
   #query omdb api for the imdb id of movie
-  respString = 'http://www.omdbapi.com/?t='+ strpmvie +'&apikey=18325552'
+  respString = 'http://www.omdbapi.com/?s='+ strpmvie + '&type=movie' +'&apikey=18325552'
   #year?
   r = requests.get(respString)
-
   #put api response into json format
   dictionary = r.json()
-
+  
+  #get an array of movies and check which is closest to the ceremony
+  #print(type(dictionary['Search']))
+  upperBound=5
+  imdbURL="NA"
+  if ('Search' in dictionary) and len(dictionary['Search']) >= 1:
+      for i in range(0, len(dictionary['Search'])):
+          movieYear=dictionary['Search'][i]['Year']
+          if  movieYear < year and (int(year)-int(movieYear) <= upperBound):
+            imdbURL = "https://www.imdb.com/title/" + dictionary['Search'][i]['imdbID']
+            break
+  
   #put imdb id into the imdb movie url to get their webpage for the given movie and return the result
-  imdbURL = "https://www.imdb.com/title/" + dictionary['imdbID']
   return(imdbURL)
 
 

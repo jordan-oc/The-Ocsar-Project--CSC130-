@@ -16,7 +16,8 @@ def imdb():
     print("getting url")
     if request.method == "GET":
         mname=request.args['mname']
-        return giveURL(mname)
+        year=request.args['year']
+        return giveURL(mname, str(year))
         
 @app.route('/display', methods=['GET', 'POST'])
 def display():
@@ -98,19 +99,36 @@ def search():
         return jsonify(searchByYear(year, data))
     
         
-# endpoint for returning collection reasource
+# 1st endpoint for returning collection reasource
 @app.route('/movies/categories/bestpicture/1997', methods=['GET'])
-def getColletion():
+def getColletion1():
     year = 1997
     category = "BEST PICTURE"
     # search function goes here
     return jsonify( searchByCategory(category, searchByYear(year, data)) )
 
+# 2nd endpoint for returning collection reasource
+@app.route('/movies/categories/Actor/1997', methods=['GET'])
+def getColletion2():
+    year = 1997
+    category = "ACTOR"
+    # search function goes here
+    return jsonify( searchByCategory(category, searchByYear(year, data)) )
+
 # endpoint for returning singleton reasource
 @app.route('/movies/categories/bestpicture/1997/winner', methods=['GET'])
-def getSingleton():
+def getSingleton1():
     category="BEST PICTURE"
     year = 1997
+    winner = True
+    # search function goes here
+    return jsonify( searchByWinner(True, searchByYear(year, searchByCategory(category, data))) )
+
+# endpoint for returning singleton reasource
+@app.route('/movies/categories/actor/1970/winner', methods=['GET'])
+def getSingleton2():
+    category="ACTOR"
+    year = 1970
     winner = True
     # search function goes here
     return jsonify( searchByWinner(True, searchByYear(year, searchByCategory(category, data))) )
