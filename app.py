@@ -17,6 +17,7 @@ def imdb():
     if request.method == "GET":
         mname=request.args['mname']
         year=request.args['year']
+        print(mname, year)
         return giveURL(mname, str(year))
         
 @app.route('/display', methods=['GET', 'POST'])
@@ -39,9 +40,12 @@ def display():
             year=int(request.args['year'])
         if not request.args['winner'] == "":
             winner=True
-            
-           
-        if name :
+        
+        if name and category and year:
+            arr=searchByYear(year, searchByCategory(category, searchByName(name, data)))
+        elif name and year:
+            arr=searchByName(name, data)
+        elif name:
             arr=searchByName(name, data)
         elif category and year and winner:
             arr=searchByWinner(winner, searchByYear(year, searchByCategory(category, data)))
