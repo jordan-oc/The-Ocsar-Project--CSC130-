@@ -21,7 +21,7 @@
     <ul>
         <img src="{{ url_for('static', filename='Images/TheOscarProjectLogo.png') }}" class= "logo" alt="The Oscar Project" width="180" height="50">
         <li><a class="active" href="http://127.0.0.1:5000/">Home</a></li>
-        <li><a href="about.html">About</a></li>
+        <li><a href="http://127.0.0.1:5000/about">About</a></li>
         <li><a href="http://127.0.0.1:5000/apiHelp">API</a></li>
     </ul>
 	
@@ -61,7 +61,6 @@
 					
 					var elem = document.getElementById(par);
 					var s = "http://127.0.0.1:5000/imbdbURL?mname=" + par + "&year=" + par2;
-					var st = "";
 					fetch(s).then(function(response) {
 						response.text().then(function(text) {
 							elem.href = text;

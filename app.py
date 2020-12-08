@@ -9,9 +9,12 @@ app = Flask(__name__)
 @app.route('/apiHelp', methods=['GET', 'POST'])
 def apiHelp():
     return render_template('api.html')
+
+@app.route('/about', methods=['GET', 'POST'])
+def aboutPage():
+    return render_template('about.html')
     
 @app.route('/imbdbURL', methods=['GET', 'POST'])
-# have java script on page call this endpoint to get imdb information
 def imdb():
     print("getting url")
     if request.method == "GET":
@@ -19,6 +22,12 @@ def imdb():
         year=request.args['year']
         print(mname, year)
         return giveURL(mname, str(year))
+        
+@app.route('/', methods=['GET', 'POST'])
+def home():
+        print("asdsasda")
+        redirect(url_for('home'))
+        return render_template('home.html')
         
 @app.route('/display', methods=['GET', 'POST'])
 def display():
@@ -43,8 +52,12 @@ def display():
         
         if name and category and year:
             arr=searchByYear(year, searchByCategory(category, searchByName(name, data)))
+        elif name and category:
+            arr=searchByCategory(category, searchByName(name, data))
         elif name and year:
             arr=searchByName(name, data)
+        elif name and winner:
+            arr=searchByWinner(winner, searchByName(name, data))
         elif name:
             arr=searchByName(name, data)
         elif category and year and winner:
@@ -63,21 +76,22 @@ def display():
             return redirect(url_for('home'))
             
         return render_template('display.html', movies=arr)
-
-@app.route('/', methods=['GET', 'POST'])
-def home():
-        print("asdsasda")
-        redirect(url_for('home'))
-        return render_template('home.html')
-        #return render_template('home.html', selection=request.form['rad'])
         
 @app.route('/search', methods=['GET'])
 # how to test: type 'http://127.0.0.1:5000/search?category=direction&winner=True&year=1987' into url
 def search():
+    arr=False
     category=False
     year=False
     winner=False
     name=False
+    
+    def noMovies(a):
+        if len(a) == 0:
+            print(len(a))
+            b={"error":"no movies found"}
+            return jsonify(b)
+    
     if 'category' in request.args:
         category = str(request.args["category"])
     if 'year' in request.args:
@@ -87,20 +101,52 @@ def search():
     if 'name' in request.args:
         name = str(request.args["name"])
     
-    if name :
-        return jsonify(searchByName(name, data))
+    if name and category and year:
+        arr=searchByYear(year, searchByCategory(category, searchByName(name, data)))
+        noMovies(arr)
+        return jsonify(arr)
+    if name and category:
+        arr=searchByCategory(category, searchByName(name, data))
+        return noMovies(arr)
+        return jsonify(arr)
+    elif name and year:
+        arr=searchByYear(year, searchByName(name, data))
+        noMovies(arr)
+        return jsonify(arr)
+    elif name and winner:
+        arr=searchByYear(winner, searchByName(name, data))
+        noMovies(arr)
+        return jsonify(arr)
+    elif name:
+        arr=searchByName(name, data)
+        noMovies(arr)
+        return jsonify(arr)
     elif category and year and winner:
-        return jsonify( searchByWinner(winner, searchByYear(year, searchByCategory(category, data))) )
+        arr=searchByWinner(winner, searchByYear(year, searchByCategory(category, data)))
+        noMovies(arr)
+        return jsonify(arr)
     elif category and winner:
-        return jsonify( searchByWinner(winner, searchByCategory(category, data)) )
+        arr=searchByWinner(winner, searchByCategory(category, data))
+        noMovies(arr)
+        return jsonify(arr)
     elif category and year:
-        return jsonify( searchByYear(year, searchByCategory(category, data)) )
+        arr=searchByYear(year, searchByCategory(category, data))
+        noMovies(arr)
+        return jsonify(arr)
     elif year and winner:
-        return jsonify( searchByWinner(winner, searchByYear(year, data)) )
+        arr=searchByWinner(winner, searchByYear(year, data))
+        noMovies(arr)
+        return jsonify(arr)
     elif category:
-        return jsonify(searchByCategory(category, data))
+        arr=searchByCategory(category, data)
+        noMovies(arr)
+        return jsonify(arr)
     elif year:
-        return jsonify(searchByYear(year, data))
+        arr=searchByYear(year, data)
+        noMovies(arr)
+        return jsonify(arr)
+    else:
+        return jsonify({"error":"cannot search, end of filter statements"})
     
         
 # 1st endpoint for returning collection reasource

@@ -7,18 +7,11 @@ def giveURL(movie, year):
   strpmvie = movie.replace(' ', '+')
   strpmvie = movie.replace("//'", "'")
   
-  #print(movie)
   #query omdb api for the imdb id of movie
-  
   respString = 'http://www.omdbapi.com/?s='+ strpmvie + '&type=movie' +'&apikey=18325552'
-  #year?
   r = requests.get(respString)
   #put api response into json format
   dictionary = r.json()
-  
-  #get an array of movies and check which is closest to the ceremony
-  #print(type(dictionary['Search']))
-  #print(dictionary)
   
   upperBound=5
   imdbURL="NA"

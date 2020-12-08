@@ -33,3 +33,26 @@ li a:hover {
 .logo {
   float: left;
 }
+
+.background {
+  position: relative;
+}
+
+.about_text {
+  text-align: left;
+  position: absolute;
+  top: 31%;
+  left: 38%;
+  transform: translate(-50%, -50%);
+}
+
+h1 {
+  color: #a59051;
+  font-size: 70px;
+  text-align: center;
+}
+
+p {
+  color: white;
+  font-size: 24px;
+}
