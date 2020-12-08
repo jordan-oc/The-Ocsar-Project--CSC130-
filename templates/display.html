@@ -51,7 +51,7 @@
 			{%endif%}
 			
 			</td>
-			<td><button type="button" onclick="myFunction('{{movie.film|replace("\'","\\'")}}', '{{movie.year}}')">Get IMDB Link</button><a href id = "{{movie.film}}"></a></td>
+			<td><button type="button" onclick="myFunction('{{movie.film|replace("\'","\\'")}}', '{{movie.year}}')">Get IMDB Link</button><br><a href="" target="_blank" id = "{{movie.film}}"></a></td>
 		  </tr>
 		  
 		  {% endfor %}
@@ -64,6 +64,7 @@
 					var st = "";
 					fetch(s).then(function(response) {
 						response.text().then(function(text) {
+							elem.href = text;
 							elem.innerHTML = text;
 						});
 					});

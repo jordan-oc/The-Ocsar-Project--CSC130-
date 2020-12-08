@@ -112,14 +112,14 @@ def getColletion1():
     return jsonify( searchByCategory(category, searchByYear(year, data)) )
 
 # 2nd endpoint for returning collection reasource
-@app.route('/movies/categories/Actor/1997', methods=['GET'])
+@app.route('/movies/categories/actor/1997', methods=['GET'])
 def getColletion2():
     year = 1997
     category = "ACTOR"
     # search function goes here
     return jsonify( searchByCategory(category, searchByYear(year, data)) )
 
-# endpoint for returning singleton reasource
+# 1st endpoint for returning singleton reasource
 @app.route('/movies/categories/bestpicture/1997/winner', methods=['GET'])
 def getSingleton1():
     category="BEST PICTURE"
@@ -128,7 +128,7 @@ def getSingleton1():
     # search function goes here
     return jsonify( searchByWinner(True, searchByYear(year, searchByCategory(category, data))) )
 
-# endpoint for returning singleton reasource
+# 2nd endpoint for returning singleton reasource
 @app.route('/movies/categories/actor/1970/winner', methods=['GET'])
 def getSingleton2():
     category="ACTOR"
