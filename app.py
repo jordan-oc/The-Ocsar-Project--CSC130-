@@ -50,12 +50,18 @@ def display():
         if not request.args['winner'] == "":
             winner=True
         
-        if name and category and year:
+        if name and category and year and winner:
+            arr=searchByWinner( winner, searchByYear(year, searchByCategory(category, searchByName(name, data))) )
+        elif name and category and year:
             arr=searchByYear(year, searchByCategory(category, searchByName(name, data)))
+        elif name and category and winner:
+            arr=searchByWinner(winner, searchByCategory(category, searchByName(name, data)))
+        elif name and year and winner:
+            arr=searchByWinner(winner, searchByYear(year, searchByName(name, data)))
         elif name and category:
             arr=searchByCategory(category, searchByName(name, data))
         elif name and year:
-            arr=searchByName(name, data)
+            arr=searchByYear(year, searchByName(name, data))
         elif name and winner:
             arr=searchByWinner(winner, searchByName(name, data))
         elif name:
